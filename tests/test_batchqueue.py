@@ -20,7 +20,7 @@ class Test(TestCase):
         self.q = BatchQueue(lull_time=700)
 
         # turn-on the worker thread
-        threading.Thread(target=worker, daemon=True, kwargs={'queue': self.q}).start()
+        threading.Thread(target=worker, daemon=True, kwargs={"queue": self.q}).start()
 
         # send ten task requests to the worker, pausing a random number of
         # milliseconds (up to 1000)
@@ -44,7 +44,7 @@ class Test(TestCase):
         self.q = BatchQueue(lull_time=700)
 
         # turn-on the worker thread
-        threading.Thread(target=worker, daemon=True, kwargs={'queue': self.q}).start()
+        threading.Thread(target=worker, daemon=True, kwargs={"queue": self.q}).start()
 
         # send ten task requests to the worker, pausing a random number of
         # milliseconds (up to 1000)

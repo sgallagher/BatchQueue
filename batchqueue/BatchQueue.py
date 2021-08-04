@@ -4,10 +4,11 @@ import threading
 from time import monotonic as time
 from time import sleep
 
-VERSION = '0.1.0'
+VERSION = "0.1.0"
+
 
 class BatchQueue(queue.Queue):
-    '''Variant of a queue that can return a batch of objects when there is
+    """Variant of a queue that can return a batch of objects when there is
     a lull in their addition.
 
     :lull_time How long in milliseconds for there to be no activity on the
@@ -18,7 +19,7 @@ class BatchQueue(queue.Queue):
 
     Note that in order for the lull_time to work, each instance of
     BatchQueue will create a thread.
-    '''
+    """
 
     def __init__(self, lull_time=1000):
         super().__init__()
@@ -42,7 +43,7 @@ class BatchQueue(queue.Queue):
             sleep(0.01)
 
     def put(self, item, block=True, timeout=None):
-        '''Put an item into the queue.
+        """Put an item into the queue.
 
         If optional args 'block' is true and 'timeout' is None (the default),
         block if necessary until a free slot is available. If 'timeout' is
@@ -51,7 +52,7 @@ class BatchQueue(queue.Queue):
         Otherwise ('block' is false), put an item on the queue if a free slot
         is immediately available, else raise the Full exception ('timeout'
         is ignored in that case).
-        '''
+        """
         with self.not_full:
             if self.maxsize > 0:
                 if not block:
@@ -75,7 +76,7 @@ class BatchQueue(queue.Queue):
             self.not_empty.notify()
 
     def get(self, block=True, timeout=None):
-        '''Remove and return an item from the queue.
+        """Remove and return an item from the queue.
 
         If optional args 'block' is true and 'timeout' is None (the default),
         block if necessary until an item is available. If 'timeout' is
@@ -84,7 +85,7 @@ class BatchQueue(queue.Queue):
         Otherwise ('block' is false), return an item if one is immediately
         available, else raise the Empty exception ('timeout' is ignored
         in that case).
-        '''
+        """
         with self.not_empty:
             if not block:
                 if not self._qsize():
@@ -111,7 +112,7 @@ class BatchQueue(queue.Queue):
             return item
 
     def get_batch(self, block=True, timeout=None):
-        '''Remove and return an item from the queue.
+        """Remove and return an item from the queue.
 
         If optional args 'block' is true and 'timeout' is None (the default),
         block if necessary until an item is available. If 'timeout' is
@@ -120,7 +121,7 @@ class BatchQueue(queue.Queue):
         Otherwise ('block' is false), return an item if one is immediately
         available, else raise the Empty exception ('timeout' is ignored
         in that case).
-        '''
+        """
         with self.batch_ready:
             if not block:
                 if not self._qsize():
