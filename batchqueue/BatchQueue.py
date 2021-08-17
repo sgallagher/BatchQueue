@@ -4,8 +4,6 @@ import threading
 from time import monotonic as time
 from time import sleep
 
-VERSION = "0.1.0"
-
 
 class BatchQueue(queue.Queue):
     """Variant of a queue that can return a batch of objects when there is
