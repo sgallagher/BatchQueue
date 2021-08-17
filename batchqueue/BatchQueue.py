@@ -14,9 +14,6 @@ class BatchQueue(queue.Queue):
     :lull_time How long in milliseconds for there to be no activity on the
     BatchQueue before signaling that a batch is ready.
 
-    The queue will pass all of its contents to self.callback when lull_time
-    seconds have passed without a new entry on the queue.
-
     Note that in order for the lull_time to work, each instance of
     BatchQueue will create a thread.
     """
@@ -112,13 +109,13 @@ class BatchQueue(queue.Queue):
             return item
 
     def get_batch(self, block=True, timeout=None):
-        """Remove and return an item from the queue.
+        """Remove and return a batch of items from the queue.
 
         If optional args 'block' is true and 'timeout' is None (the default),
         block if necessary until an item is available. If 'timeout' is
         a non-negative number, it blocks at most 'timeout' seconds and raises
         the Empty exception if no item was available within that time.
-        Otherwise ('block' is false), return an item if one is immediately
+        Otherwise ('block' is false), return a batch if one is immediately
         available, else raise the Empty exception ('timeout' is ignored
         in that case).
         """
